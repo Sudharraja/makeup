@@ -3,7 +3,7 @@
   label: string;
 };
 
-export type ServiceIcon = "bridal" | "trial" | "party" | "airbrush";
+export type ServiceIcon = "bridal" | "trial" | "party" | "airbrush" | "destination";
 
 export type ServiceItem = {
   icon: ServiceIcon;
@@ -12,7 +12,12 @@ export type ServiceItem = {
   price: string;
 };
 
-export type LookCategory = "Bridal" | "Glam" | "Natural" | "Airbrush";
+export type LookCategory =
+  | "Bridal"
+  | "Natural"
+  | "Glam"
+  | "Editorial"
+  | "Traditional";
 export type LookFilter = LookCategory | "All";
 
 export type LookItem = {
@@ -45,57 +50,74 @@ export type DashboardCard = {
 };
 
 export const NAV_ITEMS: RouteNavItem[] = [
-  { path: "/", label: "Dashboard" },
-  { path: "/about", label: "About Us" },
-  { path: "/services", label: "Services" },
-  { path: "/why-choose-us", label: "Why Choose Us" },
+  { path: "/", label: "Home" },
   { path: "/portfolio", label: "Portfolio" },
-  { path: "/reviews", label: "Reviews" },
-  { path: "/booking", label: "Booking" },
+  { path: "/about", label: "Artist" },
+  { path: "/services", label: "Services" },
+  { path: "/experience", label: "Experience" },
+  { path: "/testimonials", label: "Testimonials" },
+  { path: "/social", label: "Social" },
+  { path: "/faq", label: "FAQ" },
+  { path: "/booking", label: "Book Consultation" },
 ];
+
 
 export const DASHBOARD_CARDS: DashboardCard[] = [
   {
     path: "/about",
-    title: "About Us",
-    description: "Meet the artist, philosophy, and bridal beauty story.",
+    title: "Artist Story",
+    description: "Meet the bridal specialist behind the studio and the skin-first philosophy.",
     image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80",
   },
   {
     path: "/services",
-    title: "Services",
-    description: "See the luxury bridal services and starting packages.",
-    image:
-      "https://images.unsplash.com/photo-1523263685509-57c1d050d19b?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    path: "/why-choose-us",
-    title: "Why Choose Us",
-    description: "Understand what makes the experience premium and personal.",
-    image:
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    path: "/portfolio",
-    title: "Portfolio",
-    description: "Browse signature bridal looks by style and finish.",
+    title: "Signature Services",
+    description: "Explore elevated bridal packages designed for ceremony-to-reception longevity.",
     image:
       "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    path: "/reviews",
-    title: "Reviews",
-    description: "Read real experiences and testimonials from brides.",
+    path: "/experience",
+    title: "Why Brides Choose Us",
+    description: "See the service standards, planning precision, and artistry that set us apart.",
     image:
-      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    path: "/portfolio",
+    title: "Portfolio Edit",
+    description: "Browse polished bridal looks across natural, glam, and airbrush finishes.",
+    image:
+      "https://images.unsplash.com/photo-1498843053639-170ff2122f35?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    path: "/testimonials",
+    title: "Client Love",
+    description: "Read verified bridal testimonials and post-wedding feedback highlights.",
+    image:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    path: "/social",
+    title: "Social Proof",
+    description: "Explore Instagram highlights, bridal reels, and social engagement snapshots.",
+    image:
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    path: "/faq",
+    title: "FAQ",
+    description: "Find clear answers about booking timelines, trials, travel, and preparation steps.",
+    image:
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80",
   },
   {
     path: "/booking",
-    title: "Book Consultation",
-    description: "Reserve your date and start planning your bridal look.",
+    title: "Reserve Your Date",
+    description: "Share your details and secure your bridal consultation timeline.",
     image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1526510747491-58f928ec870f?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
@@ -127,6 +149,13 @@ export const SERVICE_ITEMS: ServiceItem[] = [
     description:
       "A lightweight, humidity-proof airbrush complexion designed for high-definition photography.",
     price: "Starting at $520",
+  },
+  {
+    icon: "destination",
+    name: "Destination Weddings",
+    description:
+      "Travel-ready bridal artistry with climate-proof prep, touch-up planning, and on-location timeline support.",
+    price: "Starting at $780",
   },
 ];
 
@@ -165,12 +194,19 @@ export const WHY_CHOOSE_ITEMS: WhyChooseItem[] = [
 
 export const ARTIST_STATS = [
   { value: "11+", label: "Years of Experience" },
-  { value: "340+", label: "Weddings Completed" },
+  { value: "340+", label: "Bridal Looks Delivered" },
   { value: "38", label: "Destination Venues" },
-  { value: "24h", label: "Average Response Time" },
+  { value: "12h", label: "Typical Reply Time" },
 ];
 
-export const FILTERS: LookFilter[] = ["All", "Bridal", "Glam", "Natural", "Airbrush"];
+export const FILTERS: LookFilter[] = [
+  "All",
+  "Bridal",
+  "Natural",
+  "Glam",
+  "Editorial",
+  "Traditional",
+];
 
 export const LOOKS: LookItem[] = [
   {
@@ -207,11 +243,11 @@ export const LOOKS: LookItem[] = [
   },
   {
     id: 5,
-    title: "Editorial Airbrush",
-    category: "Airbrush",
+    title: "Editorial Veil",
+    category: "Editorial",
     image:
       "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80",
-    alt: "Airbrush makeup style with flawless complexion",
+    alt: "Editorial bridal makeup with defined eyes and luminous skin",
   },
   {
     id: 6,
@@ -226,16 +262,32 @@ export const LOOKS: LookItem[] = [
     title: "Mint Light Complexion",
     category: "Natural",
     image:
-      "https://images.unsplash.com/photo-1523263685509-57c1d050d19b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80",
     alt: "Fresh natural bridal makeup with dewy complexion",
   },
   {
     id: 8,
-    title: "Silk Air Bridal",
-    category: "Airbrush",
+    title: "Traditional Glow",
+    category: "Traditional",
     image:
       "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=1200&q=80",
-    alt: "Airbrush bridal makeup with smooth and soft finish",
+    alt: "Traditional bridal makeup with rich tones and polished details",
+  },
+  {
+    id: 9,
+    title: "Runway Bride",
+    category: "Editorial",
+    image:
+      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1200&q=80",
+    alt: "Editorial wedding makeup featuring sculpted eyes and satin skin",
+  },
+  {
+    id: 10,
+    title: "Heritage Gold",
+    category: "Traditional",
+    image:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
+    alt: "Traditional bridal look with warm tones and statement eyes",
   },
 ];
 

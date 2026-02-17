@@ -1,5 +1,5 @@
-﻿import { AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   BrowserRouter,
   Navigate,
@@ -10,15 +10,18 @@ import {
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import WhatsAppButton from "./components/WhatsAppButton";
-import AboutPage from "./pages/site/AboutPage";
-import BookingPage from "./pages/site/BookingPage";
-import DashboardPage from "./pages/site/DashboardPage";
-import PortfolioPage from "./pages/site/PortfolioPage";
-import ReviewsPage from "./pages/site/ReviewsPage";
-import ServicesPage from "./pages/site/ServicesPage";
-import WhyChooseUsPage from "./pages/site/WhyChooseUsPage";
 import Seo from "./seo/Seo";
 import { NAV_ITEMS } from "./site/content";
+
+const DashboardPage = lazy(() => import("./pages/site/DashboardPage"));
+const AboutPage = lazy(() => import("./pages/site/AboutPage"));
+const ServicesPage = lazy(() => import("./pages/site/ServicesPage"));
+const WhyChooseUsPage = lazy(() => import("./pages/site/WhyChooseUsPage"));
+const PortfolioPage = lazy(() => import("./pages/site/PortfolioPage"));
+const ReviewsPage = lazy(() => import("./pages/site/ReviewsPage"));
+const SocialPage = lazy(() => import("./pages/site/SocialPage"));
+const FaqPage = lazy(() => import("./pages/site/FaqPage"));
+const BookingPage = lazy(() => import("./pages/site/BookingPage"));
 
 function AppShell() {
   const location = useLocation();
@@ -46,25 +49,43 @@ function AppShell() {
         <Header items={NAV_ITEMS} />
 
         <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<DashboardPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/why-choose-us" element={<WhyChooseUsPage />} />
-            <Route path="/portfolio" element={<PortfolioPage />} />
-            <Route path="/reviews" element={<ReviewsPage />} />
-            <Route
-              path="/booking"
-              element={<BookingPage onWeddingDateChange={setWeddingDate} />}
-            />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+          <Suspense fallback={<RouteSkeleton />}>
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<DashboardPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/experience" element={<WhyChooseUsPage />} />
+              <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/testimonials" element={<ReviewsPage />} />
+              <Route path="/social" element={<SocialPage />} />
+              <Route path="/faq" element={<FaqPage />} />
+              <Route
+                path="/booking"
+                element={<BookingPage onWeddingDateChange={setWeddingDate} />}
+              />
+              <Route path="/why-choose-us" element={<Navigate to="/experience" replace />} />
+              <Route path="/reviews" element={<Navigate to="/testimonials" replace />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
         </AnimatePresence>
 
         <Footer showBackToTop={showBackToTop} />
         <WhatsAppButton weddingDate={weddingDate} />
       </div>
     </>
+  );
+}
+
+function RouteSkeleton() {
+  return (
+    <main className="route-page">
+      <div className="page-container py-12 md:py-16">
+        <div className="h-6 w-40 rounded-full bg-white/70" />
+        <div className="mt-5 h-10 w-72 rounded-2xl bg-white/65" />
+        <div className="mt-4 h-28 rounded-3xl bg-white/55" />
+      </div>
+    </main>
   );
 }
 

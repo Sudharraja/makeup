@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 type WhatsAppButtonProps = {
   weddingDate: string;
 };
@@ -6,20 +8,26 @@ const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER ?? "918667762957";
 
 export default function WhatsAppButton({ weddingDate }: WhatsAppButtonProps) {
   const formattedDate = formatMessageDate(weddingDate) || "[DATE]";
+  const baseMessage = "Hello, I would love to discuss bridal makeup for my wedding.";
   const message = encodeURIComponent(
-    `Hello! I'm interested in discussing bridal makeup for my wedding on ${formattedDate}.`
+    weddingDate ? `${baseMessage} My wedding date is ${formattedDate}.` : baseMessage
   );
 
   return (
-    <a
+    <motion.a
       className="whatsapp-fab"
       href={`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`}
       target="_blank"
       rel="noreferrer"
       aria-label="Chat on WhatsApp"
+      initial={{ opacity: 0, scale: 0.8, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.45, delay: 0.25 }}
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.97 }}
     >
       <WhatsAppIcon />
-    </a>
+    </motion.a>
   );
 }
 

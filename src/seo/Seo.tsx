@@ -9,46 +9,56 @@ type PageMeta = {
 const SITE_URL = import.meta.env.VITE_SITE_URL ?? "https://saranyaberinmakeupartistry.com";
 
 const DEFAULT_META: PageMeta = {
-  title: "SaranyaBerin Makeup Artistry | Bridal Makeup Dashboard",
+  title: "Saranya Berin Makeup Atelier | Luxury Bridal Makeup",
   description:
-    "Luxury bridal makeup artistry with dedicated pages for services, portfolio, reviews, and booking consultations.",
+    "Luxury bridal makeup artistry with modern editorial finishes, portfolio previews, testimonials, and consultation booking.",
 };
 
 const PAGE_META: Record<string, PageMeta> = {
   "/": {
-    title: "Dashboard | SaranyaBerin Makeup Artistry",
+    title: "Home | Saranya Berin Makeup Atelier",
     description:
-      "Explore the bridal makeup dashboard and navigate to dedicated pages for about, services, portfolio, reviews, and booking.",
+      "Explore a premium bridal makeup studio experience with services, signature looks, and consultation booking.",
   },
   "/about": {
-    title: "About Us | SaranyaBerin Makeup Artistry",
+    title: "About | Saranya Berin Makeup Atelier",
     description:
-      "Meet the bridal artist, philosophy, and experience that shape each elegant wedding look.",
+      "Meet the bridal artist behind Saranya Berin Makeup Atelier and the skin-first approach behind every look.",
   },
   "/services": {
-    title: "Services | SaranyaBerin Makeup Artistry",
+    title: "Services | Saranya Berin Makeup Atelier",
     description:
-      "Discover bridal signature makeup, trials, bridal party styling, and airbrush packages.",
+      "Discover bridal signature makeup, trial sessions, bridal party styling, and airbrush-ready packages.",
   },
-  "/why-choose-us": {
-    title: "Why Choose Us | SaranyaBerin Makeup Artistry",
+  "/experience": {
+    title: "Experience | Saranya Berin Makeup Atelier",
     description:
-      "Learn why brides choose SaranyaBerin Makeup Artistry for quality, calm execution, and flawless results.",
+      "See why brides choose Saranya Berin Makeup Atelier for premium products, calm execution, and long-wear finish.",
   },
   "/portfolio": {
-    title: "Portfolio | SaranyaBerin Makeup Artistry",
+    title: "Portfolio | Saranya Berin Makeup Atelier",
     description:
-      "Browse signature bridal makeup looks through a filterable gallery with full-screen previews.",
+      "Browse signature bridal makeup looks in a filterable gallery with full-screen preview support.",
   },
-  "/reviews": {
-    title: "Reviews | SaranyaBerin Makeup Artistry",
+  "/testimonials": {
+    title: "Testimonials | Saranya Berin Makeup Atelier",
     description:
-      "Read authentic bridal reviews and testimonials with dynamic Google review integration support.",
+      "Read authentic bridal testimonials and client feedback for the Saranya Berin studio experience.",
+  },
+  "/social": {
+    title: "Social Proof | Saranya Berin Makeup Atelier",
+    description:
+      "Explore Instagram highlights, bridal reels, and social engagement that reflect real client trust.",
   },
   "/booking": {
-    title: "Book Consultation | SaranyaBerin Makeup Artistry",
+    title: "Book Consultation | Saranya Berin Makeup Atelier",
     description:
-      "Send your bridal inquiry, choose service interest, and reserve your wedding date consultation.",
+      "Send your bridal inquiry, share your date and style preferences, and reserve your consultation.",
+  },
+  "/faq": {
+    title: "FAQ | Saranya Berin Makeup Atelier",
+    description:
+      "Find answers to common bridal booking, trial, timeline, and preparation questions.",
   },
 };
 

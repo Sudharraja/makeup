@@ -1,8 +1,9 @@
-﻿import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import PageTransition from "../../components/PageTransition";
-import { revealProps } from "../../site/motion";
+import { SERVICE_ITEMS } from "../../site/content";
+import { fadeUpItem, revealProps, staggerContainer } from "../../site/motion";
 
 type BookingPageProps = {
   onWeddingDateChange: (date: string) => void;
@@ -17,6 +18,28 @@ type BookingFormValues = {
   message: string;
   whatsappPreferred: boolean;
 };
+
+const consultationBenefits = [
+  {
+    title: "Personalized style direction",
+    description: "Recommendations matched to your features, outfit palette, and event lighting.",
+  },
+  {
+    title: "Timeline clarity",
+    description: "Know exactly how long each service step takes on your wedding morning.",
+  },
+  {
+    title: "Luxury product strategy",
+    description: "Premium formulas selected for comfort, longevity, and photography performance.",
+  },
+];
+
+const planningChecklist = [
+  "Wedding date and venue details",
+  "Ceremony and reception timing",
+  "Inspiration references or mood board",
+  "Preferred finish: natural, glam, editorial, or traditional",
+];
 
 export default function BookingPage({ onWeddingDateChange }: BookingPageProps) {
   const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
@@ -69,7 +92,7 @@ export default function BookingPage({ onWeddingDateChange }: BookingPageProps) {
         },
         body: JSON.stringify({
           ...values,
-          source: "bridal-makeup-dashboard",
+          source: "bridal-makeup-site",
           submittedAt: new Date().toISOString(),
         }),
       });
@@ -80,7 +103,7 @@ export default function BookingPage({ onWeddingDateChange }: BookingPageProps) {
 
       setStatus("success");
       setStatusMessage(
-        "Thank you. Your consultation request has been sent and we will contact you soon."
+        "Thank you. Your consultation request was sent successfully, and we will reach out shortly."
       );
       reset();
       onWeddingDateChange("");
@@ -94,142 +117,241 @@ export default function BookingPage({ onWeddingDateChange }: BookingPageProps) {
 
   return (
     <PageTransition>
-      <section className="section-shell page-standard" aria-labelledby="booking-title">
-        <div className="booking-grid">
-          <motion.article className="booking-copy" {...revealProps}>
-            <p className="page-kicker">Book Consultation</p>
-            <h1 id="booking-title" className="page-title">
-              Reserve your bridal date with confidence.
-            </h1>
-            <p>
-              Share your wedding details, service preference, and beauty direction. You will receive
-              a personalized response with availability and the best package recommendation.
-            </p>
-            <ul>
-              <li>Skin prep and style planning aligned to your ceremony setting</li>
-              <li>Premium products selected for longevity and photography</li>
-              <li>Optional WhatsApp communication for faster coordination</li>
-            </ul>
-          </motion.article>
+      <section className="page-container">
+        <motion.div className="max-w-3xl" {...revealProps}>
+          <span className="eyebrow">Booking and Consultation</span>
+          <h1 id="booking-title" className="section-title mt-5">
+            Reserve your bridal date with an elegant, no-pressure consultation.
+          </h1>
+          <p className="section-copy mt-5">
+            Share your wedding details and vision. You will receive a tailored recommendation and clear next steps without waiting days for a response.
+          </p>
+        </motion.div>
+      </section>
+
+      <section className="page-container section-shell">
+        <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+          <aside className="space-y-5">
+            <motion.article className="surface-card p-6 md:p-7" {...revealProps}>
+              <span className="eyebrow">What You Receive</span>
+              <h2 className="section-title mt-4 text-[clamp(1.7rem,4vw,2.7rem)]">
+                Clarity, confidence, and a personalized beauty plan.
+              </h2>
+              <div className="mt-6 space-y-4">
+                {consultationBenefits.map((benefit) => (
+                  <div key={benefit.title}>
+                    <h3 className="font-display text-2xl text-ink-900">{benefit.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-600">{benefit.description}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.article>
+
+            <motion.article className="surface-card p-6 md:p-7" {...revealProps}>
+              <p className="font-accent text-[0.62rem] uppercase tracking-[0.2em] text-ink-500">
+                Helpful Checklist
+              </p>
+              <ul className="mt-4 space-y-3 text-sm text-ink-700">
+                {planningChecklist.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gold-500" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.article>
+          </aside>
 
           <motion.form
-            className="booking-form"
             onSubmit={handleSubmit(submitBookingForm)}
             noValidate
-            {...revealProps}
+            className="surface-card p-6 md:p-8"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
           >
-            <label className="form-field">
-              <span>Full Name</span>
-              <input
-                type="text"
-                {...register("fullName", {
-                  required: "Please enter your full name.",
-                  minLength: {
-                    value: 2,
-                    message: "Name should be at least 2 characters.",
-                  },
-                })}
-                className={errors.fullName ? "field-error" : ""}
-                placeholder="Your full name"
-              />
-              {errors.fullName && <small>{errors.fullName.message}</small>}
-            </label>
+            <div className="space-y-5">
+              <motion.div variants={fadeUpItem}>
+                <div className="floating-field">
+                  <input
+                    id="fullName"
+                    type="text"
+                    placeholder=" "
+                    aria-invalid={Boolean(errors.fullName)}
+                    {...register("fullName", {
+                      required: "Please enter your full name.",
+                      minLength: {
+                        value: 2,
+                        message: "Name should be at least 2 characters.",
+                      },
+                    })}
+                    className={`field-input floating-input peer ${errors.fullName ? "field-error" : ""}`}
+                  />
+                  <label htmlFor="fullName" className="floating-label">
+                    Full Name
+                  </label>
+                </div>
+                {errors.fullName ? (
+                  <p className="mt-2 text-sm text-rose-600">{errors.fullName.message}</p>
+                ) : null}
+              </motion.div>
 
-            <label className="form-field">
-              <span>Email</span>
-              <input
-                type="email"
-                {...register("email", {
-                  required: "Please enter your email.",
-                  pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Please provide a valid email address.",
-                  },
-                })}
-                className={errors.email ? "field-error" : ""}
-                placeholder="you@example.com"
-              />
-              {errors.email && <small>{errors.email.message}</small>}
-            </label>
+              <motion.div variants={fadeUpItem}>
+                <div className="floating-field">
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder=" "
+                    aria-invalid={Boolean(errors.email)}
+                    {...register("email", {
+                      required: "Please enter your email.",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Please provide a valid email address.",
+                      },
+                    })}
+                    className={`field-input floating-input peer ${errors.email ? "field-error" : ""}`}
+                  />
+                  <label htmlFor="email" className="floating-label">
+                    Email Address
+                  </label>
+                </div>
+                {errors.email ? (
+                  <p className="mt-2 text-sm text-rose-600">{errors.email.message}</p>
+                ) : null}
+              </motion.div>
 
-            <label className="form-field">
-              <span>Phone</span>
-              <input
-                type="tel"
-                {...register("phone", {
-                  required: "Please enter your phone number.",
-                  minLength: {
-                    value: 8,
-                    message: "Phone number looks too short.",
-                  },
-                })}
-                className={errors.phone ? "field-error" : ""}
-                placeholder="+1 555 000 0000"
-              />
-              {errors.phone && <small>{errors.phone.message}</small>}
-            </label>
+              <motion.div variants={fadeUpItem}>
+                <div className="floating-field">
+                  <input
+                    id="phone"
+                    type="tel"
+                    placeholder=" "
+                    aria-invalid={Boolean(errors.phone)}
+                    {...register("phone", {
+                      required: "Please enter your phone number.",
+                      minLength: {
+                        value: 8,
+                        message: "Phone number looks too short.",
+                      },
+                    })}
+                    className={`field-input floating-input peer ${errors.phone ? "field-error" : ""}`}
+                  />
+                  <label htmlFor="phone" className="floating-label">
+                    Phone Number
+                  </label>
+                </div>
+                {errors.phone ? (
+                  <p className="mt-2 text-sm text-rose-600">{errors.phone.message}</p>
+                ) : null}
+              </motion.div>
 
-            <label className="form-field">
-              <span>Wedding Date</span>
-              <input
-                type="date"
-                min={minimumDate}
-                {...register("weddingDate", {
-                  required: "Please select your wedding date.",
-                })}
-                className={errors.weddingDate ? "field-error" : ""}
-              />
-              {errors.weddingDate && <small>{errors.weddingDate.message}</small>}
-            </label>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <motion.div variants={fadeUpItem}>
+                  <div className="floating-field">
+                    <input
+                      id="weddingDate"
+                      type="date"
+                      min={minimumDate}
+                      aria-invalid={Boolean(errors.weddingDate)}
+                      {...register("weddingDate", {
+                        required: "Please select your wedding date.",
+                      })}
+                      className={`field-input floating-input floating-input-fixed ${errors.weddingDate ? "field-error" : ""}`}
+                    />
+                    <label htmlFor="weddingDate" className="floating-label floating-label-fixed">
+                      Wedding Date
+                    </label>
+                  </div>
+                  {errors.weddingDate ? (
+                    <p className="mt-2 text-sm text-rose-600">{errors.weddingDate.message}</p>
+                  ) : null}
+                </motion.div>
 
-            <label className="form-field form-field--full">
-              <span>Service Interest</span>
-              <select
-                {...register("serviceInterest", {
-                  required: "Please choose a service.",
-                })}
-                className={errors.serviceInterest ? "field-error" : ""}
+                <motion.div variants={fadeUpItem}>
+                  <div className="floating-field">
+                    <select
+                      id="serviceInterest"
+                      aria-invalid={Boolean(errors.serviceInterest)}
+                      {...register("serviceInterest", {
+                        required: "Please choose a service.",
+                      })}
+                      className={`field-input floating-input floating-input-fixed ${errors.serviceInterest ? "field-error" : ""}`}
+                    >
+                      <option value="">Choose a service</option>
+                      {SERVICE_ITEMS.map((service) => (
+                        <option key={service.name} value={service.name}>
+                          {service.name}
+                        </option>
+                      ))}
+                    </select>
+                    <label htmlFor="serviceInterest" className="floating-label floating-label-fixed">
+                      Service Selection
+                    </label>
+                  </div>
+                  {errors.serviceInterest ? (
+                    <p className="mt-2 text-sm text-rose-600">{errors.serviceInterest.message}</p>
+                  ) : null}
+                </motion.div>
+              </div>
+
+              <motion.div variants={fadeUpItem}>
+                <div className="floating-field">
+                  <textarea
+                    id="message"
+                    rows={5}
+                    placeholder=" "
+                    aria-invalid={Boolean(errors.message)}
+                    {...register("message", {
+                      required: "Please share a few details for your consultation.",
+                      minLength: {
+                        value: 12,
+                        message: "Please include at least 12 characters.",
+                      },
+                    })}
+                    className={`field-input floating-input peer min-h-34 resize-none ${errors.message ? "field-error" : ""}`}
+                  />
+                  <label htmlFor="message" className="floating-label">
+                    Tell us about your wedding vision
+                  </label>
+                </div>
+                {errors.message ? (
+                  <p className="mt-2 text-sm text-rose-600">{errors.message.message}</p>
+                ) : null}
+              </motion.div>
+
+              <motion.label
+                variants={fadeUpItem}
+                className="flex items-start gap-3 rounded-2xl border border-white/75 bg-white/65 p-3 text-sm text-ink-700"
               >
-                <option value="">Choose a service</option>
-                <option value="Bridal Signature">Bridal Signature</option>
-                <option value="Bridal Trial">Bridal Trial</option>
-                <option value="Bridal Party">Bridal Party</option>
-                <option value="Airbrush Finish">Airbrush Finish</option>
-              </select>
-              {errors.serviceInterest && <small>{errors.serviceInterest.message}</small>}
-            </label>
+                <input
+                  type="checkbox"
+                  {...register("whatsappPreferred")}
+                  className="mt-0.5 h-4 w-4 rounded border-ink-300 text-gold-500 focus:ring-gold-400"
+                />
+                <span>Prefer WhatsApp communication for faster planning updates.</span>
+              </motion.label>
 
-            <label className="form-field form-field--full">
-              <span>Message</span>
-              <textarea
-                rows={4}
-                {...register("message", {
-                  required: "Please share a few details for your consultation.",
-                  minLength: {
-                    value: 12,
-                    message: "Please include at least 12 characters.",
-                  },
-                })}
-                className={errors.message ? "field-error" : ""}
-                placeholder="Tell us about your venue, timeline, and desired makeup style."
-              />
-              {errors.message && <small>{errors.message.message}</small>}
-            </label>
+              <motion.button
+                type="submit"
+                disabled={status === "sending"}
+                variants={fadeUpItem}
+                className="button-primary w-full disabled:pointer-events-none disabled:opacity-60"
+              >
+                {status === "sending" ? "Sending Request..." : "Send Consultation Request"}
+              </motion.button>
 
-            <label className="checkbox-field form-field--full">
-              <input type="checkbox" {...register("whatsappPreferred")} />
-              <span>Prefer WhatsApp communication?</span>
-            </label>
-
-            <button type="submit" className="pastel-button" disabled={status === "sending"}>
-              {status === "sending" ? "Sending Request..." : "Send Consultation Request"}
-            </button>
-
-            {statusMessage && (
-              <p className={`form-status ${status === "success" ? "is-success" : "is-error"}`} role="status">
-                {statusMessage}
-              </p>
-            )}
+              {statusMessage ? (
+                <motion.p
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={status === "success" ? "status-success" : "status-error"}
+                  role="status"
+                >
+                  {statusMessage}
+                </motion.p>
+              ) : null}
+            </div>
           </motion.form>
         </div>
       </section>

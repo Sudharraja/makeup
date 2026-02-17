@@ -91,7 +91,7 @@ function RouteSkeleton() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/makeup/">
       <AppShell />
     </BrowserRouter>
   );

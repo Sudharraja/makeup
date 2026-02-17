@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { easeSculpted } from "../site/motion";
+import logo from "../assets/images/Logo.png";
 
 type HeaderItem = {
   path: string;
@@ -67,11 +68,10 @@ export default function Header({ items }: HeaderProps) {
           transition={{ duration: 0.55, ease: easeSculpted }}
         >
           <Link to="/" className="group flex items-center gap-3" aria-label="Saranya Berin homepage">
-            <span className="relative grid h-11 w-11 place-items-center overflow-hidden rounded-2xl bg-linear-to-br from-gold-300 via-gold-400 to-rose-400 font-accent text-sm font-bold tracking-[0.14em] text-ink-900 shadow-[0_14px_32px_-20px_rgba(138,94,47,0.95)]">
-              SB
-              <span className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/15 to-transparent" />
-            </span>
-            <span className="hidden min-[380px]:flex flex-col leading-none">
+           <span className="relative w-10">
+             <img className="relative grid h-11 w-11 place-items-center overflow-hidden rounded-2xl bg-linear-to-br from-gold-300 via-gold-400 to-rose-400 font-accent text-sm font-bold tracking-[0.14em] text-ink-900 shadow-[0_14px_32px_-20px_rgba(138,94,47,0.95)]" src={logo} />
+           </span>
+            <span className="hidden min-[580px]:flex flex-col leading-none text-nowrap">
               <span
                 className={[
                   "font-accent text-[0.58rem] font-semibold uppercase tracking-[0.28em]",
@@ -142,7 +142,7 @@ export default function Header({ items }: HeaderProps) {
               <span
                 className={[
                   "absolute left-0 top-[14px] h-0.5 w-full rounded-full bg-current transition-all duration-300",
-                  isMenuOpen ? "-translate-y-[7px] -rotate-45" : "",
+                  isMenuOpen ? "translate-y-7 -rotate-45" : "",
                 ].join(" ")}
               />
             </span>

@@ -1,0 +1,6 @@
+[
+  { "id": 1, "category": "HD", "image": "/images/hd1.webp" },
+  { "id": 2, "category": "Airbrush", "image": "/images/air1.webp" },
+  { "id": 3, "category": "Engagement", "image": "/images/eng1.webp" },
+  { "id": 4, "category": "Reception", "image": "/images/rec1.webp" }
+]
